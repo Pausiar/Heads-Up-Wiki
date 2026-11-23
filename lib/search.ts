@@ -166,8 +166,9 @@ export function searchWiki(query: string, limit = 16): SearchEntry[] {
         else if (word.length > 4 && entry.haystack.includes(word.slice(0, -1))) score += 3;
       }
 
-      // small kind priority so direct encyclopedia entries beat prose sections
-      if (entry.kind === "Enemigo" || entry.kind === "Objeto") score += 3;
+      // small kind priority so direct encyclopedia entries beat prose sections,
+      // but only for entries that already matched the query
+      if (score > 0 && (entry.kind === "Enemigo" || entry.kind === "Objeto")) score += 3;
 
       return { entry, score };
     })
